@@ -2,10 +2,43 @@
 <html>
 <head>
 
-    <title>Aula de Nuvem</title>
+    <title>Usuários Cadastrados</title>
 </head>
 <body>
-    <h1>Meu site está na NUVEM</h1>
-    <p>Computação em Nuvem é incrível</p>
+    <h1>lista de usuários</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Foto</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaUsuarios"></tbody>
+        </table>
+    <script>
+        async function carregarUsuarios () {
+            const resposta = await fetch ("/usuarios");
+            const usuarios = await resposta.json();
+
+            const tabela = document.getElementById("tabelaUsuarios");
+            tabela.innerHTML = "";
+            usuarios.forEach(usuario => {
+                tabela.innerHTML += `
+                <tr>
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.email}</td>
+                    <td>       
+                    ${usuario.foto ? `<img src="/uploads/${usuario.foto}"
+                        width="60">` : "Sem foto"}
+                        </td>
+                        </tr>
+                        `;
+            });
+
+        }
+    </script>    
 </body>
 </html>
